@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7f4">
+  <meta name="description" content="Organize suas compras em uma lista simples e prática.">
+  <title>Lista de Compras</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Lista de Compras, início">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 7.5h14l-1.3 12H6.3L5 7.5Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2M9 12v.01M15 12v.01"/></svg></span>
+        <span>Lista de <strong>Compras</strong></span>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Alternar tema">
+        <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.1A8.5 8.5 0 0 1 8.9 3.8 8.5 8.5 0 1 0 20.2 15.1Z"/></svg>
+      </button>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> SEU DIA A DIA, MAIS LEVE</div>
+        <h1 id="page-title">Tudo o que você<br class="mobile-break"> precisa <span>comprar.</span></h1>
+        <p>Organize sua lista e aproveite cada ida ao mercado.</p>
+      </section>
+
+      <section class="list-card" aria-label="Sua lista de compras">
+        <form class="add-form" id="add-form">
+          <label class="sr-only" for="item-name">O que você precisa comprar?</label>
+          <div class="input-wrap item-input-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><input id="item-name" name="name" type="text" placeholder="O que você precisa comprar?" maxlength="120" autocomplete="off" required></div>
+          <label class="sr-only" for="item-quantity">Quantidade</label>
+          <div class="input-wrap quantity-wrap"><input id="item-quantity" name="quantity" type="number" value="1" min="1" max="999" inputmode="numeric" required><span>un.</span></div>
+          <button class="add-button" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Adicionar</span></button>
+        </form>
+
+        <div class="list-heading"><div><h2>Sua lista</h2><p id="list-subtitle">Carregando itens...</p></div><span class="list-badge" id="total-badge">0 itens</span></div>
+        <div class="list-content" id="list-content" aria-live="polite" aria-busy="true"></div>
+        <div class="list-summary"><span><span class="summary-check" aria-hidden="true">✓</span> Itens comprados</span><strong id="completed-total">0 <small>/ 0</small></strong></div>
+      </section>
+
+      <p class="tip"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg> Dica: toque no <span>✓</span> quando encontrar um item.</p>
+    </main>
+
+    <footer>© 2026 Maycon Rocha. Todos os direitos reservados.</footer>
+  </div>
+
+  <dialog class="edit-dialog" id="edit-dialog" aria-labelledby="edit-title">
+    <form id="edit-form" class="dialog-card">
+      <button class="dialog-close" id="close-dialog" type="button" aria-label="Fechar edição">×</button>
+      <div class="dialog-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 5 4 4M4 20l4.5-1 10-10a2.12 2.12 0 0 0-3-3l-10 10L4 20Z"/></svg></div>
+      <h2 id="edit-title">Editar item</h2><p>Ajuste o nome ou a quantidade.</p>
+      <label for="edit-name">Nome do item</label><input id="edit-name" name="name" maxlength="120" required>
+      <label for="edit-quantity">Quantidade</label><input id="edit-quantity" name="quantity" type="number" min="1" max="999" required>
+      <div class="dialog-actions"><button class="cancel-button" id="cancel-edit" type="button">Cancelar</button><button class="save-button" type="submit">Salvar alterações</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

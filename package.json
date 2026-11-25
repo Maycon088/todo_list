@@ -1,0 +1,12 @@
+{
+  "name": "lista-de-compras",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lista de compras responsiva com persistência local.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
