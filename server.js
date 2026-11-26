@@ -22,7 +22,14 @@ async function readItems() {
 
 async function saveItems(items) {
   await fs.mkdir(DATA_DIR, { recursive: true });
-  await fs.writeFile(DATA_FILE, `${JSON.stringify(items, null, 2)}\n`, 'utf8');
+  const temporaryFile = `${DATA_FILE}.${process.pid}.${randomUUID()}.tmp`;
+  try {
+    await fs.writeFile(temporaryFile, `${JSON.stringify(items, null, 2)}\n`, 'utf8');
+    await fs.rename(temporaryFile, DATA_FILE);
+  } catch (error) {
+    await fs.rm(temporaryFile, { force: true }).catch(() => {});
+    throw error;
+  }
 }
 
 function sendJson(response, status, payload) {
@@ -80,7 +87,8 @@ async function handleApi(request, response, url) {
     }
     return sendJson(response, 405, { error: 'Método não permitido.' });
   } catch (error) {
-    return sendJson(response, error.status || 500, { error: error.status ? error.message : 'Não foi possível acessar os dados.' });
+    console.error(`[API ${request.method} ${url.pathname}]`, error);
+    return sendJson(response, error.status || 500, { error: error.status ? error.message : 'Não foi possível acessar os dados.', detail: error.status ? undefined : error.message });
   }
 }
 

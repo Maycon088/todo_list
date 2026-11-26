@@ -33,7 +33,10 @@ async function request(url, options = {}) {
   const response = await fetch(url, { ...options, headers: { ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...options.headers } });
   if (!response.ok) {
     let message = 'Não foi possível concluir a ação.';
-    try { message = (await response.json()).error || message; } catch {}
+    try {
+      const payload = await response.json();
+      message = payload.detail ? `${payload.error}: ${payload.detail}` : (payload.error || message);
+    } catch {}
     throw new Error(message);
   }
   return response.status === 204 ? null : response.json();
