@@ -31,7 +31,7 @@ O projeto não exige dependências npm de terceiros.
 - Adicionar produtos com quantidade (de 1 a 999).
 - Excluir produtos da lista.
 - Editar o nome e a quantidade em uma janela de edição.
-- Marcar e desmarcar produtos como comprados. Os comprados aparecem riscados e em itálico.
+- Marcar e desmarcar produtos como comprados. Os comprados aparecem riscados e em itálico, e ficam no final da lista; os pendentes permanecem no início.
 - Consultar o total de unidades da lista e o total de unidades compradas.
 - Alternar entre tema claro e escuro; a preferência fica salva no navegador.
 - Layout adaptável para celulares, tablets e computadores.

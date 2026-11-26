@@ -44,7 +44,6 @@ async function request(url, options = {}) {
 
 function render() {
   listContent.setAttribute('aria-busy', 'false');
-  const completed = items.filter((item) => item.completed).length;
   const units = items.reduce((sum, item) => sum + item.quantity, 0);
   const boughtUnits = items.reduce((sum, item) => sum + (item.completed ? item.quantity : 0), 0);
   totalBadge.textContent = `${units} ${units === 1 ? 'item' : 'itens'}`;
@@ -56,14 +55,11 @@ function render() {
     return;
   }
 
-  listContent.replaceChildren(...items.map((item) => {
+  const sortedItems = [...items].sort((first, second) => Number(first.completed) - Number(second.completed));
+  listContent.replaceChildren(...sortedItems.map((item) => {
     const row = document.createElement('div');
     row.className = `shopping-item${item.completed ? ' completed' : ''}`;
     row.dataset.id = item.id;
-    const state = document.createElement('span');
-    state.className = 'item-state';
-    state.setAttribute('aria-hidden', 'true');
-    state.textContent = item.completed ? '✓' : '';
     const description = document.createElement('div');
     description.className = 'item-description';
     const name = document.createElement('span');
@@ -77,7 +73,7 @@ function render() {
       makeAction('edit-button', 'Editar item', icons.edit, 'edit'),
       makeAction('complete-button', item.completed ? 'Marcar como não comprado' : 'Marcar como comprado', icons.check, 'toggle')
     );
-    row.append(state, description, actions);
+    row.append(description, actions);
     return row;
   }));
 }
