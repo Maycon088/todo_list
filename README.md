@@ -71,4 +71,4 @@ Exemplo de corpo para criar um item:
 
 ## Observações
 
-O arquivo de dados fica na máquina onde o servidor é executado. Em um deploy, use um armazenamento persistente para preservar `data/items.json` entre reinicializações ou atualizações da plataforma. O rodapé exibe: **© 2026 Maycon Rocha. Todos os direitos reservados.**
+O arquivo de dados fica na máquina onde o servidor é executado. Defina `DATA_DIR` para escolher outro diretório gravável. Em runtimes serverless com código em `/var/task`, o servidor usa `/tmp/lista-de-compras` porque a pasta do código é somente leitura. O diretório temporário permite gravar durante a execução, mas a plataforma pode limpá-lo ao reiniciar a instância; para persistência entre reinicializações e instâncias, configure `DATA_DIR` para um volume persistente ou conecte um banco de dados gerenciado. O rodapé exibe: **© 2026 Maycon Rocha. Todos os direitos reservados.**

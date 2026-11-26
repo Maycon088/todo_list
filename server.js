@@ -1,11 +1,14 @@
 const http = require('node:http');
 const fs = require('node:fs/promises');
 const path = require('node:path');
+const os = require('node:os');
 const { randomUUID } = require('node:crypto');
 
 const PORT = Number(process.env.PORT) || 3000;
 const PUBLIC_DIR = path.join(__dirname, 'public');
-const DATA_DIR = path.join(__dirname, 'data');
+const DEPLOYED_READ_ONLY = __dirname.startsWith('/var/task') || Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.VERCEL);
+const DEFAULT_DATA_DIR = DEPLOYED_READ_ONLY ? path.join(os.tmpdir(), 'lista-de-compras') : path.join(__dirname, 'data');
+const DATA_DIR = process.env.DATA_DIR || DEFAULT_DATA_DIR;
 const DATA_FILE = path.join(DATA_DIR, 'items.json');
 const MIME_TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml' };
 
